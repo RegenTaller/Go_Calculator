@@ -142,7 +142,7 @@ func getdigstrings(s1 string, s2 string, c string, i int) (string, string) {
 	return s1, s2
 }
 
-func digits() (int, int, int, int) {
+func digits() (int, int, int, int, int) {
 
 	var c string
 	fmt.Scanf("%s\n", &c)
@@ -181,6 +181,7 @@ func digits() (int, int, int, int) {
 
 	a, e1 := strconv.Atoi(s1)
 	b, e2 := strconv.Atoi(s2)
+	var err int = 0
 
 	if e1 == nil && e2 == nil {
 
@@ -190,7 +191,7 @@ func digits() (int, int, int, int) {
 		fmt.Println(b)
 		fmt.Println(ind)
 
-	} else {
+	} else if e1 != nil && e2 != nil {
 
 		fmt.Println("Rome")
 		a = rim2dig(s1)
@@ -199,52 +200,63 @@ func digits() (int, int, int, int) {
 		fmt.Println(b)
 		flag = 1
 
-	}
+	} else {
 
-	return a, b, ind, flag
+		err = 1
+		fmt.Println("Incorrect input")
+	}
+	return a, b, ind, flag, err
 }
 
 func main() {
 
-	a, b, ind, flag := digits()
+	a, b, ind, flag, err := digits()
 
 	c := 0
 
-	if ind == 1 {
+	if a <= 10 && a >= 1 && b <= 10 && b >= 1 {
 
-		c = a + b
+		if ind == 1 {
 
-	} else if ind == 2 {
+			c = a + b
 
-		c = a - b
+		} else if ind == 2 {
 
-	} else if ind == 3 {
+			c = a - b
 
-		c = a * b
+		} else if ind == 3 {
 
-	} else if ind == 4 {
+			c = a * b
 
-		c = a / b
-	}
+		} else if ind == 4 {
 
-	if flag == 0 {
+			c = a / b
+		}
 
-		fmt.Println("The answer is: ", c)
+		if flag == 0 && err != 1 {
 
-	}
-
-	if flag == 1 {
-
-		if c > 0 {
-
-			s := conv_roman(c)
-			fmt.Println("The answer is: ", s)
-
-		} else {
-
-			fmt.Println("ERROR: Answer equals or is less then 0 or Input is WRONG")
+			fmt.Println("The answer is: ", c)
 
 		}
+
+		if flag == 1 && err != 1 {
+
+			if c > 0 {
+
+				s := conv_roman(c)
+				fmt.Println("The answer is: ", s)
+
+			} else {
+
+				fmt.Println("ERROR: Answer equals or is less then 0 or Input is WRONG")
+
+			}
+
+		}
+
+	} else {
+
+		fmt.Println("Incorrect input")
 
 	}
 
